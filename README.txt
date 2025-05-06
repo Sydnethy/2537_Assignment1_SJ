@@ -1,3 +1,6 @@
+Youtube: https://youtu.be/7XsuMOMjRnE
+Render hosted site: https://comp2537-assignment1-a01466220.onrender.com
+
 Self-graded Assignment 1 Checklist
 
 Student Name: Sydney Jennings
@@ -19,6 +22,7 @@ Student Set: 1B
  
 50/50 (Total grade out of 50, 5 marks each x 10 items)
 
-Perhaps I would get a bonus mark or two for having a ton of pictures of my dog Kenai!? I had some trouble with my sessions and had to submit this assignment late v_v
+Perhaps I could get a bonus mark or two for having a ton of pictures of my dog Kenai!? I have completely finished the assignment but 
+had some trouble with my sessions and Render and had to submit this assignment late v_v
 
 *Note items are considered *fully* complete (marked with an x inside the box: [x]), OR incomplete (box is left empty: [ ])
