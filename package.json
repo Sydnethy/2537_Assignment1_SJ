@@ -1,0 +1,28 @@
+{
+  "name": "2537_assignment1_sj",
+  "version": "1.0.0",
+  "description": "BCIT 2537 WebDev 2 course Assignment 1 - node.js, express, Encrypted sessions, MongoDB, User Authentication, NoSQL injection attacks, .env files, git repos, BCrypt passwords, and hosted on Render.",
+  "homepage": "https://github.com/Sydnethy/2537_Assignment1_SJ#readme",
+  "bugs": {
+    "url": "https://github.com/Sydnethy/2537_Assignment1_SJ/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sydnethy/2537_Assignment1_SJ.git"
+  },
+  "license": "ISC",
+  "author": "Sydney Jennings",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "mongodb": "^6.16.0"
+  }
+}
