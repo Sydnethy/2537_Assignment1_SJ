@@ -1,0 +1,76 @@
+<%- include('templates/header') %>
+
+<div
+    style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+    "
+>
+    <!-- Log In Title -->
+    <h1
+        style="
+            color: olivedrab;
+            font-family: Arial, sans-serif;
+            margin-bottom: 20px;
+        "
+    >
+        Log In
+    </h1>
+
+    <!-- Form -->
+    <form
+        action="/loggingIn"
+        method="post"
+        style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        "
+    >
+        <input
+            name="email"
+            type="text"
+            placeholder="Email"
+            style="
+                padding: 10px;
+                width: 250px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            "
+        />
+        <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            style="
+                padding: 10px;
+                width: 250px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            "
+        />
+        <button
+            type="submit"
+            name="action"
+            value="submit"
+            style="
+                padding: 10px 20px;
+                background-color: olivedrab;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            "
+        >
+            Submit
+        </button>
+    </form>
+</div>
+
+<%- include('templates/footer') %>

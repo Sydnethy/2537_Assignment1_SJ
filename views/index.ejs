@@ -1,0 +1,44 @@
+<%- include('templates/header') %>
+
+<div>
+    <div
+        style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        "
+    >
+        <button
+            onclick="location.href='/login'"
+            style="
+                padding: 12px 24px;
+                font-size: 16px;
+                background-color: olivedrab;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+            "
+        >
+            Log In
+        </button>
+        <button
+            onclick="location.href='/signup'"
+            style="
+                padding: 12px 24px;
+                font-size: 16px;
+                background-color: olivedrab;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+            "
+        >
+            Sign Up
+        </button>
+    </div>
+</div>
+
+<%- include('templates/footer') %>

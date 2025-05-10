@@ -1,0 +1,86 @@
+<%- include('templates/header') %>
+
+<div
+    style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+    "
+>
+    <!-- Sign Up Title -->
+    <h1
+        style="
+            color: olivedrab;
+            font-family: Arial, sans-serif;
+            margin-bottom: 20px;
+        "
+    >
+        Sign Up
+    </h1>
+
+    <!-- Sign Up Form -->
+    <form
+        action="/signingUp"
+        method="post"
+        style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        "
+    >
+        <input
+            name="name"
+            type="text"
+            placeholder="Your name"
+            style="
+                padding: 10px;
+                width: 250px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            "
+        />
+        <input
+            name="email"
+            type="text"
+            placeholder="Email"
+            style="
+                padding: 10px;
+                width: 250px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            "
+        />
+        <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            style="
+                padding: 10px;
+                width: 250px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            "
+        />
+        <button
+            type="submit"
+            style="
+                padding: 10px 20px;
+                background-color: olivedrab;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            "
+        >
+            Submit
+        </button>
+    </form>
+</div>
+
+<%- include('templates/footer') %>
