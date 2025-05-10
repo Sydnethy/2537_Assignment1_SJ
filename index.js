@@ -448,7 +448,6 @@ app.get("/members", (req, res) => {
 
 // Serve static files from the public directory
 app.use(express.static(__dirname + "/public"));
-app.use(express.static("public"));
 
 // // Handle any unmatched routes with a 404 error
 // app.get("*dummy", (req, res) => {
