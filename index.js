@@ -62,6 +62,10 @@ app.use(
  */
 app.set("view engine", "ejs");
 
+app.use(express.static(__dirname + "/public"));
+
+
+
 app.get("/", (req, res) => {
     res.render("index");
 });
@@ -85,9 +89,10 @@ app.get("/dogs", (req, res) => {
         "kenai7.jpg",
         "kenai8.jpg",
         "kenai9.jpg",
-        "kenai10.jpg"
+        "kenai10.jpg",
     ];
-    res.render("dogs", { dogImage });
+
+    res.render("dogs", { dogImage: dogImage });
 });
 
 app.get("/admin", (req, res) => {
@@ -101,6 +106,9 @@ app.get("/admin", (req, res) => {
 //         res.render("members", { authenticated: true });
 //     }
 // });
+app.get("/members", (req, res) => {
+    res.render("members");
+});
 
 app.get("/logout", (req, res) => {
     req.session.destroy();
@@ -446,8 +454,7 @@ app.get("/members", (req, res) => {
 //     res.send(html);
 // });
 
-// Serve static files from the public directory
-app.use(express.static(__dirname + "/public"));
+
 
 // // Handle any unmatched routes with a 404 error
 // app.get("*dummy", (req, res) => {

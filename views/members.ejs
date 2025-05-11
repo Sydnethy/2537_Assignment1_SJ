@@ -1,0 +1,46 @@
+<%- include('templates/header') %>
+
+<!-- Welcome Message -->
+<div
+    style="
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+    "
+>
+    <h1 style="color: olivedrab; font-size: 32px">Welcome, name!</h1>
+
+    <!-- Dog Image -->
+    <img
+        src="/kenai4.jpg"
+        alt="Kenai"
+        style="width: 300px; border-radius: 12px; margin-top: 20px"
+    />
+
+    <!-- Logout Button -->
+    <form
+        action="/logout"
+        method="get"
+        style="text-align: center; padding: 20px"
+    >
+        <button
+            type="submit"
+            style="
+                padding: 12px 24px;
+                background-color: olivedrab;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 16px;
+                cursor: pointer;
+            "
+        >
+            Logout
+        </button>
+    </form>
+</div>
+
+<%- include('templates/footer') %>

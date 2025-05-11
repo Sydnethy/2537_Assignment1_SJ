@@ -1,16 +1,15 @@
 <%- include('templates/header') %>
-<div>
-    <img src="/cool-kenai.jpg" alt="doggy">
-</div>
+
 
 <div class="container text-center">
+    <h1>Welcome to Kenai Corner!!</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-        <% dogImage.forEach(function(image) { %>
-        <img
-            src="/<%= image %>"
-            alt="Dog"
-            style="width: 200px; border-radius: 10px"
-        />
+        <% dogImage.forEach(function(dogImage) { %>
+            <img
+                src="/<%= dogImage %>"
+                alt="Dog"
+                style="border-radius: 10px"
+            >
         <% }); %>
     </div>
 </div>

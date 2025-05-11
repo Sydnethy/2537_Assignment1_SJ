@@ -1,7 +1,47 @@
 Youtube: https://youtu.be/7XsuMOMjRnE
 Render hosted site: https://comp2537-assignment1-a01466220.onrender.com
 
-Self-graded Assignment 1 Checklist
+
+
+<h1> Self-graded Assignment 2 Checklist</h1>
+
+    Criteria	
+    ========
+[]  The /admin page redirects to the /login page if not logged in.
+[]  The /admin page shows an error message if logged in, but not an admin
+[]  The /admin page shows a list of all users
+[]  The /admin page allows for promoting and demoting users to/from admin type
+[x]  All pages use a CSS Framework like Bootstrap (you must incorporate a header, footer, responsive grid, forms, buttons)
+
+[x]  The site uses EJS as a templating engine
+[x]  Common headers and footers are shared across all pages
+[x]  Code used within loop is templated using EJS (ex: list of users in admin page)
+[x]  The members page has a responsive grid of 3 images.
+[x]  Your site is hosted on Render or other hosting site.
+ 
+/50 (Total grade out of 50, 5 marks each x 10 items)
+
+*Note items are considered *fully* complete (marked with an x inside the box: [x]), OR incomplete (box is left empty: [ ])
+
+
+
+
+
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
+
+
+
+
+
+<h1>Self-graded Assignment 1 Checklist</h1>
 
 Student Name: Sydney Jennings
 Student Set: 1B
@@ -21,6 +61,9 @@ Student Set: 1B
 [x]  Session information is stored in an encrypted MongoDB session database. Sessions expire after 1 hour.
  
 50/50 (Total grade out of 50, 5 marks each x 10 items)
+
+
+
 
 Perhaps I could get a bonus mark or two for having a ton of pictures of my dog Kenai!? I have completely finished the assignment but 
 had some trouble with my sessions and Render and had to submit this assignment late v_v
