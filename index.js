@@ -87,7 +87,7 @@ function adminAuthorization(req, res, next) {
     if (!isAdmin(req)) {
         res.status(403);
         res.render("oops", {
-            errorType: "You're not Authorized for this page.",
+            errorType: "403. You're not Authorized for this page.",
         });
         console.log("Unauthorized access attempt.");
         return;

@@ -1,16 +1,13 @@
-Youtube: https://youtu.be/7XsuMOMjRnE
-Render hosted site: https://comp2537-assignment1-a01466220.onrender.com
-
-
-
 <h1> Self-graded Assignment 2 Checklist</h1>
+Youtube: 
+Render: https://comp2537-assignment2-a01466220.onrender.com
 
     Criteria	
     ========
-[]  The /admin page redirects to the /login page if not logged in.
-[]  The /admin page shows an error message if logged in, but not an admin
-[]  The /admin page shows a list of all users
-[]  The /admin page allows for promoting and demoting users to/from admin type
+[x]  The /admin page redirects to the /login page if not logged in.
+[x]  The /admin page shows an error message if logged in, but not an admin
+[x]  The /admin page shows a list of all users
+[x]  The /admin page allows for promoting and demoting users to/from admin type
 [x]  All pages use a CSS Framework like Bootstrap (you must incorporate a header, footer, responsive grid, forms, buttons)
 
 [x]  The site uses EJS as a templating engine
@@ -25,26 +22,16 @@ Render hosted site: https://comp2537-assignment1-a01466220.onrender.com
 
 
 
-
-
-
-
-
-
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-
-
-
-
-
 
 
 <h1>Self-graded Assignment 1 Checklist</h1>
 
 Student Name: Sydney Jennings
 Student Set: 1B
+
+Youtube: https://youtu.be/7XsuMOMjRnE
+Render: https://comp2537-assignment1-a01466220.onrender.com
 
     Criteria	
     ========
