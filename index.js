@@ -57,70 +57,6 @@ app.use(
 );
 
 /**
- * EJS template engine setup
- * EJS routing
- */
-app.set("view engine", "ejs");
-
-app.use(express.static(__dirname + "/public"));
-
-
-
-app.get("/", (req, res) => {
-    res.render("index");
-});
-
-app.get("/login", (req, res) => {
-    res.render("login");
-});
-
-app.get("/signup", (req, res) => {
-    res.render("signup");
-});
-
-app.get("/dogs", (req, res) => {
-    const dogImage = [
-        "cool-kenai.jpg",
-        "curious-kenai.jpg",
-        "sleepy-kenai.jpg",
-        "kenai4.jpg",
-        "kenai5.jpg",
-        "kenai6.jpg",
-        "kenai7.jpg",
-        "kenai8.jpg",
-        "kenai9.jpg",
-        "kenai10.jpg",
-    ];
-
-    res.render("dogs", { dogImage: dogImage });
-});
-
-app.get("/admin", (req, res) => {
-    res.render("admin");
-});
-
-// app.get("/members", (req, res) => {
-//     if (!req.session.authenticated) {
-//         res.render("members", { authenticated: false });
-//     } else {
-//         res.render("members", { authenticated: true });
-//     }
-// });
-app.get("/members", (req, res) => {
-    res.render("members");
-});
-
-app.get("/logout", (req, res) => {
-    req.session.destroy();
-    res.render("logout");
-});
-
-app.get("*dummy", (req, res) => {
-    res.status(404);
-    res.render("404");
-});
-
-/**
  * Middleware to check if the user is authenticated
  */
 function isValidSession(req) {
@@ -134,12 +70,14 @@ function sessionValidation(req, res, next) {
     if (isValidSession(req)) {
         next();
     } else {
-        res.redirect("/login");
+        const errorType = "You're not logged in.";
+        res.render("oops", { errorType });
+        console.log("Unauthenticated access attempt.");
     }
 }
 
 function isAdmin(req) {
-    if (req.session.user_type == "admin") {
+    if (req.session.userType == "admin") {
         return true;
     }
     return false;
@@ -148,52 +86,80 @@ function isAdmin(req) {
 function adminAuthorization(req, res, next) {
     if (!isAdmin(req)) {
         res.status(403);
-        res.render("errorMessage", { error: "Not Authorized" });
+        res.render("oops", {
+            errorType: "You're not Authorized for this page.",
+        });
+        console.log("Unauthorized access attempt.");
         return;
     } else {
         next();
     }
 }
+
+app.post("/promote", async (req, res) => {
+    const email = req.body.email;
+    await userCollection.updateOne({ email }, { $set: { userType: "admin" } });
+    res.redirect("/admin");
+    console.log("User promoted to admin.");
+});
+
+app.post("/demote", async (req, res) => {
+    const email = req.body.email;
+    await userCollection.updateOne({ email }, { $set: { userType: "user" } });
+    res.redirect("/admin");
+    console.log("User demoted to user.");
+});
+
 /**
- * End of authentication/authorization middleware
+ * EJS template engine setup
+ * EJS routing
  */
+app.set("view engine", "ejs");
 
-// // app.get('/', (req, res) => {
+app.use(express.static(__dirname + "/public"));
 
-//     if(req.query.action === 'login') {
-//         res.redirect('/login'); // Redirect to the login page if the action is 'login'
-//         return;
-//     } else if(req.query.action === 'signup') {
-//         res.redirect('/signup'); // Redirect to the signup page if the action is 'signup'
-//         return;
-//     }
+app.get("/", (req, res) => {
+    res.render("index");
+});
 
-//     res.send(`
-//         <body>
-//             <div>
-//                 <form action="/" method="get" style="display: inline;">
-//                     <button type="submit" name="action" value="login">Log in</button>
-//                 </form>
-//                 <form action="/" method="get" style="display: inline;">
-//                     <button type="submit" name="action" value="signup">Sign Up</button>
-//                 </form>
-//             </div>
-//         </body>
-//     `);
-// });
+app.get("/login", (req, res) => {
+    res.render("login");
+});
 
-// // login route to display a form for logging in
-// app.get('/login', (req,res) => {
-//     var html = `
-//     Log In
-//     <form action='/loggingIn' method='post'>
-//         <input name='email' type='text' placeholder='email'>
-//         <input name='password' type='password' placeholder='password'>
-//         <button type="submit" name="action" value="submit">Submit</button>
-//     </form>
-//     `;
-//     res.send(html);
-// });
+app.get("/signup", (req, res) => {
+    res.render("signup");
+});
+
+app.get("/dogs", sessionValidation, (req, res) => {
+    const dogImage = [
+        "cool-kenai.jpg",
+        "curious-kenai.jpg",
+        "sleepy-kenai.jpg",
+        "kenai4.jpg",
+        "kenai5.jpg",
+        "kenai6.jpg",
+        "kenai7.jpg",
+        "kenai8.jpg",
+        "kenai9.jpg",
+        "kenai10.jpg",
+    ];
+    const name = req.session.name;
+
+    res.render("dogs", { dogImage: dogImage, name: name });
+});
+
+app.get("/admin", sessionValidation, adminAuthorization, async (req, res) => {
+    const users = await userCollection
+        .find()
+        // .project({ name: 1, userType: 1 })
+        .toArray();
+    res.render("admin", { users });
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.render("logout");
+});
 
 // Handle login form submission
 //// This route is used to authenticate the user when they log in
@@ -207,27 +173,6 @@ app.post("/loggingIn", async (req, res) => {
     if (validationResult.error != null) {
         console.log(validationResult.error);
 
-        // var html = `
-        // <%- include('templates/header') %>
-        //     <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-        //         <p style="color: black; font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 15px;">
-        //             Ooops! Invalid email. Please try again.
-        //         </p>
-        //         <form action="/login" method="get">
-        //             <button
-        //             type="submit"
-        //             name="action"
-        //             value="submit"
-        //             style="padding: 10px 20px; background-color: olivedrab; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;"
-        //             >
-        //             Try Again
-        //             </button>
-        //         </form>
-        //         </div>
-        //     <%- include('templates/footer') %>
-        // `;
-        // res.send(html);
-
         const errorType = "Invalid email.";
         res.render("oops", { errorType });
         return;
@@ -236,37 +181,15 @@ app.post("/loggingIn", async (req, res) => {
     // find user in the MongoDB collection by email
     const result = await userCollection
         .find({ email: email })
-        .project({ email: 1, password: 1, _id: 1, name: 1 })
+        .project({ email: 1, password: 1, _id: 1, name: 1, userType: 1 })
         .toArray();
 
     console.log(result);
     if (result.length != 1) {
         console.log("user not found");
 
-        // var html = `
-        // <%- include('templates/header') %>
-        //     <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-        //         <p style="color: black; font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 15px;">
-        //             Ooops! User not found. Please try again.
-        //         </p>
-        //         <form action="/login" method="get">
-        //             <button
-        //             type="submit"
-        //             name="action"
-        //             value="submit"
-        //             style="padding: 10px 20px; background-color: olivedrab; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;"
-        //             >
-        //             Try Again
-        //             </button>
-        //         </form>
-        //         </div>
-        //     <%- include('templates/footer') %>
-        // `;
-        // res.send(html);
-
         const errorType = "User not found.";
         res.render("oops", { errorType });
-
         return;
     }
 
@@ -278,52 +201,19 @@ app.post("/loggingIn", async (req, res) => {
         req.session.email = email;
         req.session.cookie.maxAge = expireTime; // set session expiration time to 1 hour
         req.session.name = result[0].name; // store the user's name in the session
+        req.session.userType = result[0].userType;
 
-        res.redirect("/members");
+        res.redirect("/dogs");
+        // res.render("dogs", { name: req.session.name }, { userType: req.session.userType });
         return;
     } else {
         console.log("incorrect password");
-        // var html = `
-        // <%- include('templates/header') %>
-        //     <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-        //         <p style="color: black; font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 15px;">
-        //             Ooops! Incorrect password. Please try again.
-        //         </p>
-        //         <form action="/login" method="get">
-        //             <button
-        //                 type="submit"
-        //                 name="action"
-        //                 value="submit"
-        //                 style="padding: 10px 20px; background-color: olivedrab; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;"
-        //                 >
-        //             Try Again
-        //             </button>
-        //         </form>
-        //     </div>
-        //     <%- include('templates/footer') %>
-        // `;
-        // res.send(html);
 
         const errorType = "Incorrect password.";
         res.render("oops", { errorType });
         return;
     }
 });
-
-// // Signup route to display a form for creating a new user
-// //// This route is used to create a new user in the MongoDB database
-// app.get("/signup", (req, res) => {
-//     var html = `
-//     Sign Up
-//     <form action='/signingUp' method='post'>
-//     <input name='name' type='text' placeholder='Your name'>
-//     <input name='email' type='text' placeholder='email'>
-//     <input name='password' type='password' placeholder='password'>
-//     <button>Submit</button>
-//     </form>
-//     `;
-//     res.send(html);
-// });
 
 // route to handle form submission from signUp page
 app.post("/signingUp", async (req, res) => {
@@ -342,27 +232,8 @@ app.post("/signingUp", async (req, res) => {
     const validationResult = schema.validate({ email, password });
     if (validationResult.error != null) {
         console.log(validationResult.error);
-        res.redirect("/signup");
-        var html = `
-        <%- include('templates/header') %>
-            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-                <p style="color: black; font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 15px;">
-                    Ooops! Invalid email and/or password. Please try again.
-                </p>
-                <form action="/signup" method="get">
-                    <button 
-                    type="submit" 
-                    name="action" 
-                    value="submit" 
-                    style="padding: 10px 20px; background-color: olivedrab; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;"
-                    >
-                    Try Again
-                    </button>
-                </form>
-                </div>
-            <%- include('templates/footer') %>
-        `;
-        res.send(html);
+        const errorType = "Invalid email or password. Only use 20 characters.";
+        res.render("oops", { errorType });
         return;
     }
 
@@ -374,93 +245,18 @@ app.post("/signingUp", async (req, res) => {
         name: name,
         email: email,
         password: hashedPassword,
+        userType: "user",
     });
     console.log("Inserted user");
 
-    res.redirect("/members");
-});
-
-app.get("/members", (req, res) => {
-    if (!req.session.authenticated) {
-        var html = `
-        <%- include('templates/header') %>
-            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-                <p style="color: black; font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 15px;">
-                    Please Log In to access this page.
-                </p>
-                <form action="/login" method="get">
-                    <button 
-                    type="submit" 
-                    name="action" 
-                    value="submit" 
-                    style="padding: 10px 20px; background-color: olivedrab; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;"
-                    >
-                    Log In
-                    </button>
-                </form>
-                </div>
-            <%- include('templates/footer') %>
-        `;
-        res.send(html);
-        return;
-    }
-
-    const dogImage = [
-        "cool-kenai.jpg",
-        "curious-kenai.jpg",
-        "sleepy-kenai.jpg",
-        "kenai4.jpg",
-        "kenai5.jpg",
-        "kenai6.jpg",
-        "kenai7.jpg",
-        "kenai8.jpg",
-        "kenai9.jpg",
-        "kenai10.jpg",
-    ];
-    const randomIndex = Math.floor(Math.random() * dogImage.length);
-    const randomDogImage = dogImage[randomIndex];
-
-    var html = `
-        <%- include('templates/header') %>
-        <body>
-            <h1>Hello, ${req.session.name}!</h1>
-            <img src="/${randomDogImage}" style="height:80vh;">
-            <form action="/logout" method="get">
-                <button type="submit">Logout</button>
-            </form>
-        </body>
-        <%- include('templates/footer') %>
-    `;
-    res.send(html);
+    res.render("login");
     return;
 });
 
-// // Logout route to destroy the session and redirect to the logout page
-// app.get("/logout", (req, res) => {
-//     req.session.destroy();
-
-//     var html = `
-//     <%- include('templates/header') %>
-//     <body>
-//         <div>
-//             <h1>You are logged out.</h1>
-//             <form action="/" method="get">
-//                 <button type="submit">Return Home</button>
-//             </form>
-//         </div>
-//     </body>
-//     <%- include('templates/footer') %>
-//     `;
-//     res.send(html);
-// });
-
-
-
-// // Handle any unmatched routes with a 404 error
-// app.get("*dummy", (req, res) => {
-//     res.status(404);
-//     res.send("Page not found :( - 404");
-// });
+app.get("*dummy", (req, res) => {
+    res.status(404);
+    res.render("404");
+});
 
 app.listen(port, () => {
     console.log("Server is running on port: " + port);
