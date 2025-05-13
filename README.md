@@ -1,4 +1,4 @@
-<h1> Self-graded Assignment 2 Checklist</h1>
+**Self-graded Assignment 2 Checklist**
 
 Youtube: https://youtu.be/sudwwPDIfjE
 Render: https://comp2537-assignment2-a01466220.onrender.com
